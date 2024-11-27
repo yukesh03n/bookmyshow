@@ -18,29 +18,6 @@ function MovieList() {
 
     const dispatch = useDispatch();
 
-    const fakeMovies = [
-        {
-            key: "1",
-            poster: "Image 1",
-            title: "Wolf of wall street",
-            descriptions: "Stock market",
-            duration: 120,
-            genre: "comedy",
-            language: "English",
-            realeaseDate: "2024-08-01"
-        },
-        {
-            key: "2",
-            poster: "Image 2",
-            title: "Wolf of wall street 2",
-            descriptions: "Stock market",
-            duration: 120,
-            genre: "comedy",
-            language: "English",
-            realeaseDate: "2024-08-01"
-        }
-    ];
-
     const tableHeadings = [
         {
             title: "Poster", dataIndex: "poster", render: (text, data) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Radio } from 'antd';
 import Title from 'antd/es/typography/Title';
 import { Link } from 'react-router-dom';
 import { RegisterUser } from '../../api/user';
@@ -78,6 +78,24 @@ const Register = () => (
                 ]}
             >
                 <Input.Password />
+            </Form.Item>
+
+            <Form.Item 
+                label="Register has a partner"
+                htmlFor='role'
+                name={"role"}
+                initialValue={false}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select an option!',
+                    },
+                ]}
+            >
+                <Radio.Group name = "radiogroup" >
+                    <Radio value={"partner"}>Yes</Radio>
+                    <Radio value={"user"}>No</Radio>
+                </Radio.Group>
             </Form.Item>
 
             <Form.Item>

@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
     try {
@@ -38,7 +39,7 @@ const loginUser = async (req, res) => {
 
         res.send({ success: true, message: "Login successul", token: token });
     } catch (e) {
-        res.send(400).json({ success: false, message: e.message });
+        res.status(400).json({ success: false, message: e.message });
     }
 };
 
