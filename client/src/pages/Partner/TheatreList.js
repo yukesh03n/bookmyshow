@@ -37,7 +37,7 @@ function TheatreList() {
         {
             title: "Actions", render: (text, data) => {
                 return (
-                    <>
+                    <div className="d-flex align-items-center gap-10">
                         <Button>
                             <EditOutlined onClick={() => {
                                 setIsModalOpen(true);
@@ -61,7 +61,7 @@ function TheatreList() {
                             </Button>
                             )
                         }
-                    </>
+                    </div>
                 )
             }
         },
