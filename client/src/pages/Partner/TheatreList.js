@@ -6,6 +6,7 @@ import { Button, Table } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import TheatreFormModal from './TheatreFormModal';
 import DeleteTheatreModal from './DeleteTheatreModal';
+import ShowModal from './ShowModal';
 
 function TheatreList() {
 
@@ -53,12 +54,12 @@ function TheatreList() {
                         </Button>
                         {
                             data.isActive && (
-                            <Button onClick={() => {
-                                setIsShowModalOpen(true);
-                                setSelectedTheatre(data);
-                            }}>
-                                Shows
-                            </Button>
+                                <Button onClick={() => {
+                                    setIsShowModalOpen(true);
+                                    setSelectedTheatre(data);
+                                }}>
+                                    + Shows
+                                </Button>
                             )
                         }
                     </div>
@@ -121,6 +122,15 @@ function TheatreList() {
                     getData={getData}
                 />
             )}
+
+            {isShowModalOpen && (
+                <ShowModal
+                    isShowModalOpen={isShowModalOpen}
+                    setIsShowModalOpen={setIsShowModalOpen}
+                    selectedTheatre={selectedTheatre}
+                />
+            )}
+
 
         </div>
     )
