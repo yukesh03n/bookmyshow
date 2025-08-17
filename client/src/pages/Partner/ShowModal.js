@@ -131,7 +131,7 @@ const ShowModal = ({
       title: "Movie",
       dataIndex: "movie",
       render: (text, data) => {
-        return data.movie.title;
+        return data?.movie?.title;
       },
     },
     {

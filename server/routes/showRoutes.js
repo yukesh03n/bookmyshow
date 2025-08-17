@@ -4,8 +4,8 @@ const { addShow, deleteShow, updateShow, getAllShowsByTheatre, getAllTheatresByM
 const showRouter = express.Router();
 
 showRouter.post("/add-show", addShow);
-showRouter.post("/delete-theatre", deleteShow);
-showRouter.put("/update-theatre", updateShow);
+showRouter.post("/delete-show", deleteShow);
+showRouter.put("/update-show", updateShow);
 showRouter.post("/get-all-shows-by-theatre", getAllShowsByTheatre);
 showRouter.post("/get-all-theatres-by-movie", getAllTheatresByMovie);
 showRouter.post("/get-show-by-id", getShowById);

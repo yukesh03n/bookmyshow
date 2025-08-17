@@ -13,7 +13,7 @@ const addShow = async (req, res) => {
 
 const deleteShow = async (req, res) => {
     try {
-        await Shows.findByIdAndDelete(req.params.showId);
+        await Shows.findByIdAndDelete(req.body.showId);
         res.send({ success: true, message: "Show has been deleted" });
     } catch (e) {
         console.log(e);
@@ -35,7 +35,7 @@ const updateShow = async (req, res) => {
 
 const getAllShowsByTheatre = async (req, res) => {
     try {
-        const shows = await Shows.find({ theatreId: req.params.theatreId }).populate("movie");
+        const shows = await Shows.find({ theatre: req.body.theatreId }).populate("movie");
         res.send({ success: true, message: "All shows are fetched", data: shows });
     } catch (e) {
         console.log(e);
@@ -48,29 +48,32 @@ const getAllTheatresByMovie = async (req, res) => {
     try {
         const { movie, date } = req.body;
         const shows = await Shows.find({ movie, date }).populate("theatre");
-
-        let uniqueTheatre = [];
-
+        
+        let uniqueTheatres = [];
         shows.forEach((show) => {
-
-            let isTheatre = uniqueTheatre.find(
+            let isTheatre = uniqueTheatres.find(
                 (theatre) => theatre._id === show.theatre._id
             );
-
             if (!isTheatre) {
-
-                let rv = show.find((obj) => obj.theatre._id === show.theatre._id);
-                uniqueTheatre.push({
-                    ...shows.theatre._doc,
-                    shows: rv
+                let showsOfThisTheatre = shows.filter(
+                    (showObj) => showObj.theatre._id == show.theatre._id
+                );
+                uniqueTheatres.push({
+                    ...show.theatre._doc,
+                    shows: showsOfThisTheatre,
                 });
             }
         });
-
-        res.send({ success: true, message: "All shows are fetched", data: uniqueTheatre });
-    }
-    catch (e) {
-        res.send({ success: false, message: e.message });
+        res.send({
+            success: true,
+            message: "All theatres fetched!",
+            data: uniqueTheatres,
+        });
+    } catch (err) {
+        res.send({
+            success: false,
+            message: err.message,
+        });
     }
 };
 
