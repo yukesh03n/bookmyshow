@@ -30,9 +30,6 @@ async function EmailHelper(templateName, reciverEmail, creds) {
                 user: "apikey",
                 pass: SENDGRID_API_KEY,
             },
-            tls: {
-                rejectUnauthorized: false, // only for dev
-            },
         };
         const transporter = nodemailer.createTransport(transportDetails);
         await transporter.sendMail(emailDetails);
