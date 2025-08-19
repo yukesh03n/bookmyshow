@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
 const fs = require("fs");
-const dotenv = require("dotenv");
 const path = require("path");
-dotenv.config();
 const { SENDGRID_API_KEY } = process.env;
 function replaceContent(content, creds) {
     let allkeysArr = Object.keys(creds);
