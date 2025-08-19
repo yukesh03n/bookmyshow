@@ -9,19 +9,19 @@ const cors = require('cors');
 const app = express();
 app.use(helmet());
 app.disable("x-powered-by");
-// app.use(
-//     helmet.contentSecurityPolicy({
-//         directives: {
-//             defaultSrc: ["'self'"],
-//             scriptSrc: ["'self'"],
-//             styleSrc: ["'self'", "https://fonts.googleapis.com"],
-//             imgSrc: ["'self'", "data:"],
-//             connectSrc: ["'self'"],
-//             fontSrc: ["'self'", "https://fonts.gstatic.com"],
-//             objectSrc: ["'none'"],
-//         },
-//     })
-// );
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      objectSrc: ["'none'"],
+    },
+  })
+);
 app.use(mongoSanitize());
 app.use(express.json());
 app.use(cookieParser());
