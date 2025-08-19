@@ -32,10 +32,6 @@ app.use(
         allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
-app.use(express.static(clientBuildPath));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
-});
 
 require("dotenv").config();
 
@@ -63,6 +59,11 @@ app.use("/api/movies", movieRouter);
 app.use("/api/theatre", theatreRouter);
 app.use("/api/shows", showRouter);
 app.use("/api/bookings", bookingRouter);
+
+app.use(express.static(clientBuildPath));
+app.get("*", (req, res) => {    
+    res.sendFile(path.join(clientBuildPath, "index.html"));
+});
 
 app.listen(1997, () => {
     console.log("Server is up and running on port 1997");
