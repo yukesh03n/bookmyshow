@@ -25,7 +25,8 @@ async function EmailHelper(templateName, reciverEmail, creds) {
         };
         const transportDetails = {
             host: "smtp.sendgrid.net",
-            port: 587,
+            port: 465,
+            secure: true,
             auth: {
                 user: "apikey",
                 pass: SENDGRID_API_KEY,
