@@ -2,6 +2,12 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const mongoSanitize = require("express-mongo-sanitize");
+const path = require('path');
+const clientBuildPath = path.join(__dirname, "../client/build");
+app.use(express.static(clientBuildPath));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(clientBuildPath, "index.html"));
+});
 
 const app = express();
 app.use(helmet());
@@ -22,6 +28,14 @@ app.use(
 app.use(mongoSanitize());
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+    cors({
+        origin: "https://bookmyshow-3oi0.onrender.com",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
+
 require("dotenv").config();
 
 const rateLimit = require("express-rate-limit");
