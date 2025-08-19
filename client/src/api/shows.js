@@ -1,8 +1,8 @@
-import { axioxInstance } from ".";
+import { axiosInstance } from ".";
 
 export const addShow = async (payload) => {
     try {
-        const response = await axioxInstance.post("/api/shows/add-show", payload);
+        const response = await axiosInstance.post("/api/shows/add-show", payload);
         return response.data;
     } catch (err) {
         return err.message;
@@ -10,7 +10,7 @@ export const addShow = async (payload) => {
 };
 export const updateShow = async (payload) => {
     try {
-        const response = await axioxInstance.put("/api/shows/update-show", payload);
+        const response = await axiosInstance.put("/api/shows/update-show", payload);
         console.log(payload, response);
         return response.data;
     } catch (err) {
@@ -19,7 +19,7 @@ export const updateShow = async (payload) => {
 };
 export const getShowsByTheatre = async (payload) => {
     try {
-        const response = await axioxInstance.post(
+        const response = await axiosInstance.post(
             "/api/shows/get-all-shows-by-theatre",
             payload
         );
@@ -30,7 +30,7 @@ export const getShowsByTheatre = async (payload) => {
 };
 export const deleteShow = async (payload) => {
     try {
-        const response = await axioxInstance.post(
+        const response = await axiosInstance.post(
             "/api/shows/delete-show",
             payload
         );
@@ -41,7 +41,7 @@ export const deleteShow = async (payload) => {
 };
 export const getAllTheatresByMovie = async (payload) => {
     try {
-        const response = await axioxInstance.post(
+        const response = await axiosInstance.post(
             "/api/shows/get-all-theatres-by-movie",
             payload
         );
@@ -52,7 +52,7 @@ export const getAllTheatresByMovie = async (payload) => {
 };
 export const getShowById = async (payload) => {
     try {
-        const response = await axioxInstance.post(
+        const response = await axiosInstance.post(
             "/api/shows/get-show-by-id",
             payload
         );

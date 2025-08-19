@@ -83,6 +83,9 @@ const Login = () => {
                 </Form.Item>
                 <div>
                     <p>New User ? <Link to={"/register"}>Register Here</Link></p>
+                    <p>
+                        Forgot Password? <Link to="/forget">Click Here</Link>
+                    </p>
                 </div>
             </Form>
         </main>

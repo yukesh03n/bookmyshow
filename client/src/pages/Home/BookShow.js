@@ -5,19 +5,22 @@ import { getShowById } from "../../api/shows";
 import { useNavigate, useParams } from "react-router-dom";
 import { message, Card, Row, Col, Button } from "antd";
 import moment from "moment";
+import StripeCheckout from 'react-stripe-checkout';
+import { bookShow, makePayment } from "../../api/booking";
+
 const BookShow = () => {
 
     const { user } = useSelector((state) => state.users);
     const dispatch = useDispatch(); // Redux dispatch function
     const [show, setShow] = useState(); // State for holding show details
-    const [selectedSeats, setSelectedSeats] = useState([]); 
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const params = useParams(); // Extracting URL parameters
     const navigate = useNavigate(); // Navigation hook
     // Function to fetch show data by ID
     const getData = async () => {
         try {
             dispatch(showLoading()); // Dispatching action to show loading state
-            const response = await getShowById({ showId: params.id }); 
+            const response = await getShowById({ showId: params.id });
             if (response.success) {
                 setShow(response.data); // Setting state with fetched show data
                 // message.success(response.message); // Optional success message
@@ -34,8 +37,10 @@ const BookShow = () => {
     // Function to generate seat layout dynamically
     const getSeats = () => {
         let columns = 12; // Number of columns for seating arrangement
-        let totalSeats = 120; // Total number of seats
-        let rows = totalSeats / columns; // Calculating number of rows
+        let totalSeats = show.totalSeats;
+        let rows = Math.ceil(totalSeats / columns);
+
+
         return (
             <div className="d-flex flex-column align-items-center">
                 <div className="w-100 max-width-600 mx-auto mb-25px">
@@ -56,10 +61,10 @@ const BookShow = () => {
                             let seatNumber = row * columns + column + 1; // Calculating seat number
                             let seatClass = "seat-btn"; // Default class for seat button
                             if (selectedSeats.includes(seatNumber)) {
-                                seatClass += " selected"; 
+                                seatClass += " selected";
                             }
                             if (show.bookedSeats.includes(seatNumber)) {
-                                seatClass += " booked"; 
+                                seatClass += " booked";
                             }
                             if (seatNumber <= totalSeats) {
                                 // Rendering seat button if seat number is valid
@@ -70,6 +75,8 @@ const BookShow = () => {
                                             className={seatClass}
                                             onClick={() => {
                                                 // Function to handle seat selection/deselection
+                                                if (show.bookedSeats.includes(seatNumber))  return;
+
                                                 if (selectedSeats.includes(seatNumber)) {
                                                     setSelectedSeats(
                                                         selectedSeats.filter(
@@ -106,6 +113,50 @@ mx-auto mb-25px mt-3">
     useEffect(() => {
         getData();
     }, []);
+
+    const onToken = async (token) => {
+        try {
+            dispatch(showLoading());
+            const response = await makePayment(
+                token,
+                selectedSeats.length * show.ticketPrice * 100
+            );
+            if (response.success) {
+                message.success(response.message);
+                book(response.data);
+                console.log(response);
+            } else {
+                message.error(response.message);
+            }
+            dispatch(hideLoading());
+        } catch (err) {
+            message.error(err.message);
+            dispatch(hideLoading());
+        }
+    };
+    const book = async (transactionId) => {
+        try {
+            dispatch(showLoading());
+            const response = await bookShow({
+                show: params.id,
+                transactionId,
+                seats: selectedSeats,
+                user: user._id,
+            });
+            if (response.success) {
+                message.success("Show Booking done!");
+                navigate("/profile");
+            } else {
+                message.error(response.message);
+            }
+            dispatch(hideLoading());
+        } catch (err) {
+            message.error(err.message);
+            dispatch(hideLoading());
+        }
+    };
+
+
     // JSX rendering
     return (
         <>
@@ -143,7 +194,22 @@ mx-auto mb-25px mt-3">
                             }
                             style={{ width: "100%" }}
                         >
-                            {getSeats()} {/* Rendering dynamic seat layout */}
+                            {getSeats()}
+
+                            {selectedSeats.length > 0 && (
+                                <StripeCheckout
+                                    token={onToken}
+                                    // billingAddress
+                                    amount={selectedSeats.length * show.ticketPrice * 100}
+                                    stripeKey="pk_test_51Qh4rKF14VjM8r9Jvz5I05AgUKjOz2UBQpHCozZXXJzvSmaEKbxVYbDnMsDsp46GJxpB3fAhKiR6Vvv1BxK8Az5x00VMjsSuHw"
+                                >
+                                    <div className="max-width-600 mx-auto">
+                                        <Button type="primary" shape="round" size="large" block>
+                                            Pay Now
+                                        </Button>
+                                    </div>
+                                </StripeCheckout>
+                            )}
                         </Card>
                     </Col>
                 </Row>
