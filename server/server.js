@@ -13,15 +13,39 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      scriptSrc: [
+        "'self'",
+        "https://checkout.stripe.com",
+        "https://js.stripe.com"
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",                 // needed for Ant Design + Stripe styles
+        "https://fonts.googleapis.com",
+        "https://checkout.stripe.com"
+      ],
+      fontSrc: [
+        "'self'",
+        "https://fonts.gstatic.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://q.stripe.com"             // Stripe analytics pixel
+      ],
+      connectSrc: [
+        "'self'",
+        "https://api.stripe.com"           // Stripe API calls
+      ],
+      frameSrc: [
+        "'self'",
+        "https://checkout.stripe.com"      // Stripe Checkout iframe
+      ],
       objectSrc: ["'none'"],
     },
   })
 );
+
 app.use(mongoSanitize());
 app.use(express.json());
 app.use(cookieParser());
