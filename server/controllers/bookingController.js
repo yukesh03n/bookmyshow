@@ -100,7 +100,7 @@ const getAllBooking = async (req, res) => {
                 path: "show",
                 populate: {
                     path: "theatre",
-                    model: "theatres",
+                    model: "theatre",
                 },
             });
         res.send({

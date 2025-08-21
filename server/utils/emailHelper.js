@@ -24,11 +24,15 @@ async function EmailHelper(templateName, reciverEmail, creds) {
         console.log(SENDGRID_API_KEY);
         const transportDetails = {
             host: "smtp.sendgrid.net",
-            port: 587,
+            port: 465,
+            secure: true,
             auth: {
                 user: "apikey",
                 pass: SENDGRID_API_KEY,
             },
+            tls: {
+                rejectUnauthorized: false
+            }
         };
         const transporter = nodemailer.createTransport(transportDetails);
         await transporter.sendMail(emailDetails);
