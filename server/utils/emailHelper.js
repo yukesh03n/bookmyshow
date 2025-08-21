@@ -21,10 +21,10 @@ async function EmailHelper(templateName, reciverEmail, creds) {
             text: `Hi ${creds.name} this your reset otp ${creds.otp}`,
             html: replaceContent(content, creds),
         };
+        console.log(SENDGRID_API_KEY);
         const transportDetails = {
             host: "smtp.sendgrid.net",
-            port: 465,
-            secure: true,
+            port: 587,
             auth: {
                 user: "apikey",
                 pass: SENDGRID_API_KEY,
