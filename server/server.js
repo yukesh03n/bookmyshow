@@ -42,11 +42,13 @@ app.use(
         "https://checkout.stripe.com"      // Stripe Checkout iframe
       ],
       objectSrc: ["'none'"],
+    },
+  })
+);
 
 app.use(mongoSanitize());
 app.use(express.json());
 app.use(cookieParser());
-// app.use(
 app.use(
     cors({
         origin: "https://bookmyshow-3oi0.onrender.com",
