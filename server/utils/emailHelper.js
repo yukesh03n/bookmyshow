@@ -19,7 +19,7 @@ async function EmailHelper(templateName, reciverEmail, creds) {
         let content = await fs.promises.readFile(templatePath, "utf-8");
         const emailDetails = {
             to: reciverEmail,
-            from: "takrawuser@gmail.com", // Change to your verified sender
+            from: "takrawsuperuser@gmail.com", // Change to your verified sender
             subject: "Mail from Bookmyshow",
             text: `Hi ${creds.name} this your reset otp ${creds.otp}`,
             html: replaceContent(content, creds),
@@ -55,7 +55,7 @@ async function sendMail(to, subject, text, html) {
     const msg = {
         // IMPORTANT: 'from' email must be a sender address you have verified in SendGrid.
         to: to,
-        from: 'takrawuser@gmail.com', // Replace with your verified sender email
+        from: 'takrawsuperuser@gmail.com', // Replace with your verified sender email
         subject: subject,
         text: text,
         html: html,
