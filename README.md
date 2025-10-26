@@ -41,7 +41,7 @@ You can use the following accounts to test the app:
 
 ### Customer
 
-* Email: `bob@gmail.com`
+* Email: `yukesh03n@gmail.com`
 * Password: `customer123`
 
 ### Partner
