@@ -1,15 +1,18 @@
 import React from 'react';
 import { Button, Form, Input, message, Radio } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RegisterUser } from '../../api/user';
 
 const onFinish = async (values) => {
+
+    const navigate = useNavigate();
 
     try {
         const response = await RegisterUser(values);
         if(response.success) {
             message.success(response.message);
+            navigate("/login");
         } else {
             message.error(response.message);
         }

@@ -41,12 +41,12 @@ You can use the following accounts to test the app:
 
 ### Customer
 
-* Email: `jana@gmail.com`
+* Email: `bob@gmail.com`
 * Password: `customer123`
 
 ### Partner
 
-* Email: `pooja@gmail.com`
+* Email: `jana@gmail.com`
 * Password: `partner123`
 
 ### Admin
